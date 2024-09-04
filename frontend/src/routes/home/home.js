@@ -1,10 +1,13 @@
+import React from 'react'
 import Test from "../../components/test/test";
 
-export default function Home() {
-    return(
-        <div>
-            <h1>TEST PAGE</h1>
-            <Test />
-        </div>
-    );
+const Home = () => {
+  return (
+    <div>
+        <h1>Home</h1>
+        <Test />
+    </div>
+  )
 }
+
+export default Home
