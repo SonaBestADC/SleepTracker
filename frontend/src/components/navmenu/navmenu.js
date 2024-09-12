@@ -1,5 +1,8 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import FriendsList from "../friendsList/friendsList";
+import Login from "../login/login";
+import Signup from "../signup/signup";
 import "./navmenu.css";
 
 const Navmenu = () => {
@@ -8,8 +11,9 @@ const Navmenu = () => {
         <Container>
           <Navbar.Brand href="/">Sleep Tracker</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/signup">Sign up</Nav.Link>
-            <Nav.Link href="/login">Log in</Nav.Link>
+            <Nav.Link><Signup/></Nav.Link>
+            <Nav.Link><Login/></Nav.Link>
+            <Nav.Link><FriendsList/></Nav.Link>
           </Nav>
         </Container>
       </Navbar>
