@@ -1,7 +1,5 @@
 import React from "react";
-import { Row, Col, Card, Container, Image } from "react-bootstrap";
-import placeholder from "../../images/placeholder.png";
-
+import { Row, Col, Container } from "react-bootstrap";
 const FreindItem = () => {
   return (
     <Container>
