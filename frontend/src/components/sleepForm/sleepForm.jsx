@@ -8,7 +8,7 @@ const SleepForm = () => {
   const handleShow = () => setShow(true);
   return (
     <>
-      <div onClick={handleShow}>Sleep Form</div>
+      <Button onClick={handleShow}>Sleep Form</Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -16,14 +16,24 @@ const SleepForm = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control type="email" placeholder="Email Address" />
+            <Form.Group className="mb-3" controlId="date">
+              <Form.Label>Date of Sleep</Form.Label>
+              <Form.Control type="date" placeholder="date" />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" controlId="start">
+                  <Form.Label>Sleep Start Time</Form.Label>
+                  <Form.Control type="time" placeholder="start" />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-3" controlId="end">
+                  <Form.Label>Awake time</Form.Label>
+                  <Form.Control type="time" placeholder="end" />
+                </Form.Group>
+              </Col>
+            </Row>
             <Button variant="primary" type="submit">
               Submit
             </Button>

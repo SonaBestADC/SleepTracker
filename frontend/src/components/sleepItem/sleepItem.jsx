@@ -1,18 +1,21 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, ProgressBar } from "react-bootstrap";
 import styles from "./sleepItem.module.css";
 
-const SleepItem = () => {
+const SleepItem = (props) => {
+  // Variant Rules:
+  // Red = 0 - 25
+  // Yellow = 25 - 50
+  // Blue = 50 - 85
+  // Green = 85 - 100
   return (
     <Card className={styles.card}>
       <Card.Body>
-        <Card.Title>9/18/24</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Lorem, ipsum.</Card.Subtitle>
+        <Card.Title>{props.date}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">Report of Sleep</Card.Subtitle>
         <Card.Text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-          voluptate eveniet quasi praesentium, ullam autem accusamus omnis
-          suscipit magnam accusantium alias quod illo veniam iste. Adipisci
-          sequi a repudiandae? Perferendis.
+          {props.desp}
+          <ProgressBar variant={props.variant} animated now={props.progress}/>
         </Card.Text>
       </Card.Body>
     </Card>
