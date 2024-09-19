@@ -7,7 +7,7 @@ const SleepForm = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
-    <>
+    <div>
       <Button onClick={handleShow}>Sleep Form</Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -40,7 +40,7 @@ const SleepForm = () => {
           </Form>
         </Modal.Body>
       </Modal>
-    </>
+    </div>
   );
 };
 
