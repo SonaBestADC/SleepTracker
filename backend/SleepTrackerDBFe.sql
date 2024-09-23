@@ -17,10 +17,9 @@ CREATE TABLE IF NOT EXISTS `sleep_items` (
   FOREIGN KEY ("email") REFERENCES "users"("email"));
 
 
--- CREATE TABLE IF NOT EXISTS `friends` (
---   `id` INT NOT NULL,
---   `title` VARCHAR(255) NOT NULL,
---   `event_date` DATETIME(255) NOT NULL,
---   `location` VARCHAR(255) NOT NULL,
---   `img` VARCHAR(255) NULL,
---   PRIMARY KEY (`id`));
+CREATE TABLE IF NOT EXISTS `friends` (
+  "user" VARCHAR(255) NOT NULL,
+  "friend" VARCHAR(255) NOT NULL,
+  FOREIGN KEY ("user") REFERENCES "users"("email"),
+  FOREIGN KEY ("friend") REFERENCES "users"("email")
+);

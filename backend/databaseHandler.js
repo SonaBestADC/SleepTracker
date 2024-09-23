@@ -46,7 +46,11 @@ export default class DatabaseHandler {
   }
 
 
-  async getAllUserTest(){
+  async getAllUser(){
+    return await this.db.all("SELECT * FROM users");
+  }
+
+  async getAllSleepData(){
     return await this.db.all("SELECT * FROM sleep_items");
   }
 }

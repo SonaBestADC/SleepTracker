@@ -34,14 +34,18 @@ app.post("/addSleepTest", async (req, res) => {
     req.body.variant,
     req.body.progress,
   ];
-  console.log(data);
   res.send(await database.addItem(data));
 });
 
-app.get("/get", async (req, res) => {
-  console.log(await database.getAllUserTest());
+app.get("/getAllUsers", async (req, res) => {
+  console.log(await database.getAllUser());
   res.send("ok");
 });
+
+app.get("/getAllSleep", async (req, res) => {
+    console.log(await database.getAllSleepData());
+    res.send("ok");
+  });
 
 app.listen(process.env.PORT, () => {
   console.log(`Server started on port ${process.env.PORT}`);
