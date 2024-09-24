@@ -168,8 +168,8 @@ app.post("/friends", async (req, res) => {
 
 // Test routes
 app.get("/getAllUsers", async (req, res) => {
-  console.log(await database.getAllUser());
-  res.send("ok");
+  const users = await database.getAllUser()
+  res.status(200).json(users);
 });
 
 app.listen(process.env.PORT, () => {
