@@ -83,6 +83,25 @@ export default class DatabaseHandler {
     return updatedItem;
   }
 
+  //Get all friends
+  async getAllFriends() {
+    return await this.db.all("SELECT * FROM friends");
+  }
+
+  // Get friends by user
+  async getFriendByUser(user) {
+    const friends = await this.db.all("SELECT friend FROM friends WHERE user = ?", [user]);
+    if (!friends.length) throw Error("This user has no friends");
+    return friends;
+  }
+
+  // add a friend to db
+  async addFriend(user, friend) {
+    await this.db.run("INSERT INTO friends (user, friend) VALUES (?, ?)", [user, friend]);
+    await this.db.run("INSERT INTO friends (user, friend) VALUES (?, ?)", [friend, user]);
+    return { message: "Added friend" };
+  }
+
   // Tests
   async getAllUser() {
     return await this.db.all("SELECT * FROM users");

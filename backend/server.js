@@ -134,15 +134,37 @@ app.patch("/sleepItem/:id", async (req, res) => {
 // !Friends routes
 
 // Get all friends
-app.get("/friends", async (req, res) => {});
+app.get("/friends", async (req, res) => {
+  try {
+    const friends = await database.getAllFriends();
+    res.status(200).json(friends);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
 // Get friends by user email
-app.get("/friends/:user", async (req, res) => {});
+app.get("/friends/:user", async (req, res) => {
+  const { user } = req.params;
+  try {
+    const friends = await database.getFriendByUser(user);
+    res.status(200).json(friends);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
 // POST a new friend
-app.post("/friend", async (req, res) => {});
-
-
+app.post("/friends", async (req, res) => {
+  const { user, friend } = req.body;
+  try {
+    if (!user || !friend) throw Error("Both user and friend are required");
+    const result = await database.addFriend(user, friend);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
 // Test routes
 app.get("/getAllUsers", async (req, res) => {
