@@ -1,51 +1,154 @@
 import "dotenv/config";
 import express from "express";
 import DatabaseHandler from "./databaseHandler.js";
+import bcrypt from "bcrypt";
+import validator from "validator";
+import jwt from "jsonwebtoken";
 
 const app = express();
 const database = new DatabaseHandler();
 app.use(express.json());
 
-app.param("id", (req, res, next, value) => {
-  req.id = value;
-  next();
-});
+const createToken = (email) => {
+  return jwt.sign({ email: email }, process.env.SECRET, { expiresIn: "3d" });
+};
 
 app.get("/", (req, res) => {
   res.send("uWu");
 });
 
-app.post("/addUser", async (req, res) => {
-  res.send(
-    await database.addUser([
-      req.body.email,
-      req.body.username,
-      req.body.password,
-    ])
-  );
+// !User auth routes
+// Login route
+app.post("/login", async (req, res) => {
+  const { email, username, password } = req.body;
+  try {
+    if (!email || !username || !password) throw Error("All fields must be filled");
+    // Checks email
+    const existingUser = await database.db.get("SELECT * FROM users WHERE email = ?", [email]);
+    if (!existingUser) throw Error("Incorrect email");
+    // Checks password
+    const match = await bcrypt.compare(password, existingUser.password);
+    if (!match) throw Error("Invalid password");
+
+    // Creates JWT token
+    const token = createToken(email);
+    res.status(200).json({ email: email, token });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 });
 
-app.post("/addSleepTest", async (req, res) => {
-  let data = [
-    req.body.email,
-    req.body.desp,
-    req.body.start_date,
-    req.body.end_date,
-    req.body.variant,
-    req.body.progress,
-  ];
-  res.send(await database.addItem(data));
+// Signup route
+app.post("/signup", async (req, res) => {
+  const { email, username, password } = req.body;
+  try {
+    // Validation
+    if (!email || !username || !password) throw Error("All fields must be filled");
+    if (!validator.isEmail(email)) throw Error("Email is not valid");
+    if (!validator.isStrongPassword(password)) throw Error("Password is not strong enough");
+
+    // Checks for existing user in DB
+    const existingUser = await database.db.get("SELECT * FROM users WHERE email = ?", [email]);
+    if (existingUser) throw Error("Email already in use");
+
+    // Hashes the password of the user
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    // tries to add user to DB
+    await database.addUser([email, username, hash]);
+    // creates JWT token
+    const token = createToken(email);
+    res.status(200).json({ email: email, token });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 });
 
+// !Sleep Item Routes
+// GET all sleep items
+app.get("/sleepItems", async (req, res) => {
+  let data = await database.getAllSleepItems();
+  res.status(200).json(data);
+});
+
+// POST new sleep item
+app.post("/sleepItem", async (req, res) => {
+  const { email, desp, start_date, end_date, variant, progress } = req.body;
+  try {
+    const insertedSleepItem = await database.addSleepItem({
+      email,
+      desp,
+      start_date,
+      end_date,
+      variant,
+      progress,
+    });
+    res.status(200).json(insertedSleepItem);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// GET a single sleep item
+app.get("/sleepItem/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const sleepItem = await database.getSleeItemByID(id);
+    res.status(200).json(sleepItem);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// DELETE a single sleep item by ID
+app.delete("/sleepItem/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await database.deleteSleeItemByID(id);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// PATCH a single sleep item by ID
+app.patch("/sleepItem/:id", async (req, res) => {
+  const { id } = req.params;
+  const { desp, start_date, end_date, variant, progress } = req.body;
+
+  try {
+    const updatedItems = await database.updateSleepItemById(id, {
+      desp,
+      start_date,
+      end_date,
+      variant,
+      progress,
+    });
+    res.status(200).json(updatedItems);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// !Friends routes
+
+// Get all friends
+app.get("/friends", async (req, res) => {});
+
+// Get friends by user email
+app.get("/friends/:user", async (req, res) => {});
+
+// POST a new friend
+app.post("/friend", async (req, res) => {});
+
+
+
+// Test routes
 app.get("/getAllUsers", async (req, res) => {
   console.log(await database.getAllUser());
   res.send("ok");
 });
-
-app.get("/getAllSleep", async (req, res) => {
-    console.log(await database.getAllSleepData());
-    res.send("ok");
-  });
 
 app.listen(process.env.PORT, () => {
   console.log(`Server started on port ${process.env.PORT}`);

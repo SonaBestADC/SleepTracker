@@ -28,29 +28,63 @@ export default class DatabaseHandler {
       .catch((error) => console.error(error));
   }
 
+  // Used in signup to add user
   async addUser(data) {
-    this.db.run(
-        `INSERT INTO users ("email", "username", "password") VALUES (?, ?, ?)`,
-        data
-      );
-    return 200
+    this.db.run(`INSERT INTO users ("email", "username", "password") VALUES (?, ?, ?)`, data);
+    return 200;
   }
 
-  async addItem(data) {
-    console.log(data)
-    this.db.run(
-      `INSERT INTO sleep_items ("email", "desp", "start_date", "end_date", "variant", "progress") VALUES (?, ?, ?, ?, ?, ?)`,
-      data
+  // Add single sleep item to DB
+  async addSleepItem(data) {
+    const { email, desp, start_date, end_date, variant, progress } = data;
+    const result = await this.db.run(
+      `INSERT INTO sleep_items (email, desp, start_date, end_date, variant, progress) 
+      VALUES (?, ?, ?, ?, ?, ?)`,
+      [email, desp, start_date, end_date, variant, progress]
     );
-    return 200
+
+    const insertedItem = await this.db.get("SELECT * FROM sleep_items WHERE id = ?", result.lastID);
+    return insertedItem;
   }
 
+  // Get a single sleep item by ID
+  async getSleeItemByID(id) {
+    const sleepitem = await this.db.get("SELECT * FROM sleep_items WHERE id = ?", [id]);
 
-  async getAllUser(){
-    return await this.db.all("SELECT * FROM users");
+    if (!sleepitem) throw Error("Sleep Item not found");
+    return sleepitem;
   }
 
-  async getAllSleepData(){
+  // Get all sleep Items
+  async getAllSleepItems() {
     return await this.db.all("SELECT * FROM sleep_items");
+  }
+
+  // Delete sleep item by id
+  async deleteSleeItemByID(id) {
+    const result = await this.db.run("DELETE FROM sleep_items WHERE id = ?", [id]);
+
+    if (result.changes === 0) throw Error("Sleep item not found");
+
+    return { message: "Sleep item successfully deleted" };
+  }
+
+  // Update sleep item by id
+  async updateSleepItemById(id, data) {
+    const { desp, start_date, end_date, variant, progress } = data;
+    const result = await this.db.run(
+      `UPDATE sleep_items 
+       SET desp = ?, start_date = ?, end_date = ?, variant = ?, progress = ? 
+       WHERE id = ?`,
+      [desp, start_date, end_date, variant, progress, id]
+    );
+    if (result.changes === 0) throw Error("Sleep item not found");
+    const updatedItem = await this.db.get("SELECT * FROM sleep_items WHERE id = ?", [id]);
+    return updatedItem;
+  }
+
+  // Tests
+  async getAllUser() {
+    return await this.db.all("SELECT * FROM users");
   }
 }
