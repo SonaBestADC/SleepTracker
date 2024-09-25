@@ -11,7 +11,7 @@ const SleepItem = (props) => {
   return (
     <Card className={styles.card}>
       <Card.Body>
-        <Card.Title>{props.date}</Card.Title>
+        <Card.Title>{props.date.toLocaleDateString("en-us")}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">Report of Sleep</Card.Subtitle>
         <Card.Text>
           {props.desp}

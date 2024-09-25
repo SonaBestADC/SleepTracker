@@ -24,7 +24,9 @@ const Home = () => {
       <SleepForm />
       <div className={styles.sleepItemContainer}>
         {sleepItems && sleepItems.map(sleepItem => (
-          <SleepItem desp={sleepItem.desp} variant={sleepItem.variant} progress={sleepItem.progress}/>
+          // convert datetime to mm/dd
+          
+          <SleepItem desp={sleepItem.desp} variant={sleepItem.variant} progress={sleepItem.progress} date={new Date(sleepItem.date)}/>
         ))}
       </div>
     </div>

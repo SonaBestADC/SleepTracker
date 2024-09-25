@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS `sleep_items` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   "email" VARCHAR(255) NOT NULL,
   `desp` VARCHAR(255) NOT NULL,
-  `start_date` DATETIME(255) NOT NULL,
-  `end_date` DATETIME(255) NOT NULL,
+  "hours_slept" INTEGER NOT NULL,
+  `date` DATETIME(255) NOT NULL,
   `variant` VARCHAR(255) NOT NULL,
   'progress' INT NOT NULL,
   FOREIGN KEY ("email") REFERENCES "users"("email"));

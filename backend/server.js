@@ -74,18 +74,20 @@ app.get("/sleepItems", async (req, res) => {
 
 // POST new sleep item
 app.post("/sleepItem", async (req, res) => {
-  const { email, desp, start_date, end_date, variant, progress } = req.body;
+  const { email, desp, hours_slept, date, variant, progress } = req.body;
+  console.log(req.body)
   try {
     const insertedSleepItem = await database.addSleepItem({
       email,
       desp,
-      start_date,
-      end_date,
+      hours_slept,
+      date,
       variant,
       progress,
     });
     res.status(200).json(insertedSleepItem);
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err.message });
   }
 });

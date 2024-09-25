@@ -36,11 +36,11 @@ export default class DatabaseHandler {
 
   // Add single sleep item to DB
   async addSleepItem(data) {
-    const { email, desp, start_date, end_date, variant, progress } = data;
+    const { email, desp, hours_slept, date, variant, progress } = data;
     const result = await this.db.run(
-      `INSERT INTO sleep_items (email, desp, start_date, end_date, variant, progress) 
+      `INSERT INTO sleep_items (email, desp, hours_slept, date, variant, progress) 
       VALUES (?, ?, ?, ?, ?, ?)`,
-      [email, desp, start_date, end_date, variant, progress]
+      [email, desp, hours_slept, date, variant, progress]
     );
 
     const insertedItem = await this.db.get("SELECT * FROM sleep_items WHERE id = ?", result.lastID);
