@@ -48,7 +48,7 @@ export default class DatabaseHandler {
   }
 
   // Get a single sleep item by ID
-  async getSleeItemByID(id) {
+  async getSleepItemByID(id) {
     const sleepitem = await this.db.get("SELECT * FROM sleep_items WHERE id = ?", [id]);
 
     if (!sleepitem) throw Error("Sleep Item not found");
@@ -61,12 +61,13 @@ export default class DatabaseHandler {
   }
 
   // Delete sleep item by id
-  async deleteSleeItemByID(id) {
+  async deleteSleepItemByID(id) {
+    const itemToDelete = await this.db.get("SELECT * FROM sleep_items WHERE id = ?", [id]);
+    if (!itemToDelete) throw new Error("Sleep item not found");
     const result = await this.db.run("DELETE FROM sleep_items WHERE id = ?", [id]);
-
-    if (result.changes === 0) throw Error("Sleep item not found");
-
-    return { message: "Sleep item successfully deleted" };
+    if (result.changes === 0) throw new Error("Sleep item not deleted");
+    
+    return itemToDelete;
   }
 
   // Update sleep item by id

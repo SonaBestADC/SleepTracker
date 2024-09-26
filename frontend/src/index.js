@@ -1,18 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
-import Home from "./routes/home/home";
-import Navmenu from "./components/navmenu/navmenu";
+import App from "./App";
+import { SleepItemContextProvider } from "./context/SleepItemContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Navmenu />
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <SleepItemContextProvider>
+      <App />
+    </SleepItemContextProvider>
   </React.StrictMode>
 );

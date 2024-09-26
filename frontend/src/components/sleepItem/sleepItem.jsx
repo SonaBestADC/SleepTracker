@@ -1,13 +1,22 @@
 import React from "react";
 import { Card, ProgressBar } from "react-bootstrap";
+import { useSleepItemContext } from "../../hooks/useSleepItemContext"; 
 import styles from "./sleepItem.module.css";
 
 const SleepItem = (props) => {
-  // Variant Rules:
-  // Red = 0 - 25
-  // Yellow = 25 - 50
-  // Blue = 50 - 85
-  // Green = 85 - 100
+  const { dispatch } = useSleepItemContext()
+
+  const handleClick = async () => {
+    const responce = await fetch("/sleepItem/" + props.id, {
+      method: "DELETE"
+    })
+    const json = await responce.json();
+
+    if(responce.ok){
+      dispatch({type: "DELETE_SLEEP_ITEM", payload: json})
+    }
+  }
+
   return (
     <Card className={styles.card}>
       <Card.Body>
@@ -18,6 +27,7 @@ const SleepItem = (props) => {
           <ProgressBar variant={props.variant} animated now={props.progress}/>
         </Card.Text>
       </Card.Body>
+      <span onClick={handleClick}>delete</span>
     </Card>
   );
 };
