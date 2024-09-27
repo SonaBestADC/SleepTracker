@@ -3,12 +3,15 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { SleepItemContextProvider } from "./context/SleepItemContext";
+import { AuthContextProvider } from "./context/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <SleepItemContextProvider>
-      <App />
-    </SleepItemContextProvider>
+    <AuthContextProvider>
+      <SleepItemContextProvider>
+        <App />
+      </SleepItemContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );

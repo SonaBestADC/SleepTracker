@@ -10,7 +10,6 @@ const Login = () => {
   const handleShow = () => setShow(true);
   return (
     <>
-      <div onClick={handleShow}>Login</div>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

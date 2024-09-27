@@ -108,7 +108,7 @@ app.get("/sleepItem/:id", async (req, res) => {
 app.delete("/sleepItem/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await database.deleteSleeItemByID(id);
+    const result = await database.deleteSleepItemByID(id);
     res.status(200).json(result);
   } catch (err) {
     res.status(400).json({ message: err.message });

@@ -5,13 +5,14 @@ import styles from "./sleepItem.module.css";
 
 const SleepItem = (props) => {
   const { dispatch } = useSleepItemContext()
+  
 
   const handleClick = async () => {
     const responce = await fetch("/sleepItem/" + props.id, {
       method: "DELETE"
     })
     const json = await responce.json();
-
+    console.log(json)
     if(responce.ok){
       dispatch({type: "DELETE_SLEEP_ITEM", payload: json})
     }
