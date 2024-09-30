@@ -72,6 +72,17 @@ app.get("/sleepItems", async (req, res) => {
   res.status(200).json(data);
 });
 
+// GET all sleep items per email
+app.get("/sleepItems/:email", async (req, res) => {
+  const { email } = req.params;
+  try{
+    const sleepItems = await database.getAllSleepItemsByEmail(email);
+    res.status(200).json(sleepItems);
+  }catch(err){
+    res.status(400).json({ message: err.message });
+  }
+});
+
 // POST new sleep item
 app.post("/sleepItem", async (req, res) => {
   const { email, desp, hours_slept, date, variant, progress } = req.body;
@@ -173,6 +184,17 @@ app.post("/friends", async (req, res) => {
 app.get("/getAllUsers", async (req, res) => {
   const users = await database.getAllUser()
   res.status(200).json(users);
+});
+
+app.get("/:email", async (req, res) => {
+  const { email } = req.params;
+  try{
+    const result = await database.getUser(email);
+    res.status(200).json(result);
+  }catch(err){
+    res.status(400).json({message: err.message});
+  }
+
 });
 
 app.listen(process.env.PORT, () => {

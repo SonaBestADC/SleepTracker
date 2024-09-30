@@ -51,7 +51,7 @@ const SleepForm = () => {
     let desp =
       progress >= 80 ? "You did well" : progress >= 60 ? "You could do better" : progress >= 40 ? "Could sleep more" : "See a doctor";
 
-    const testEmail = "damien@email.com";
+    const testEmail = "neil@email.com";
 
     // set as sleep data for post request
     const sleepData = { email: testEmail, desp, date: dateTimeObject, hours_slept: hourSlept, variant, progress };

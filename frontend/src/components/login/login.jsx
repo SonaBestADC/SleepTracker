@@ -1,22 +1,25 @@
 import { useState } from "react";
 import { Form, Button, Container, Modal, Col, Row } from "react-bootstrap";
 
-const Login = () => {
+const Login = ({ show, setShow }) => {
   // Add state compatability when login hook is created
 
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // set up rest of login logic
+    setShow(false);
+  };
+
   return (
     <>
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} backdrop="static" keyboard={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Row className="g-2">
               <Col>
                 <Form.Group className="mb-3" controlId="email">

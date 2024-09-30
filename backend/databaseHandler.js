@@ -60,6 +60,13 @@ export default class DatabaseHandler {
     return await this.db.all("SELECT * FROM sleep_items");
   }
 
+  // Get all sleep items by email
+  async getAllSleepItemsByEmail(email) {
+    const sleepItems = await this.db.all("SELECT * FROM sleep_items WHERE email LIKE ?", [email]);
+    if (!sleepItems) throw new Error("Sleep items not found");
+    return sleepItems
+  }
+
   // Delete sleep item by id
   async deleteSleepItemByID(id) {
     const itemToDelete = await this.db.get("SELECT * FROM sleep_items WHERE id = ?", [id]);
@@ -100,11 +107,20 @@ export default class DatabaseHandler {
   async addFriend(user, friend) {
     await this.db.run("INSERT INTO friends (user, friend) VALUES (?, ?)", [user, friend]);
     await this.db.run("INSERT INTO friends (user, friend) VALUES (?, ?)", [friend, user]);
-    return { message: "Added friend" };
+    const friends = await this.db.get("SELECT friend FROM friends WHERE user = ? AND friend = ?", [user, friend]);
+    // might change return to return json
+    return friends;
   }
 
   // Tests
   async getAllUser() {
     return await this.db.all("SELECT * FROM users");
   }
+
+  // get user by email
+  async getUser(email){
+    const result = this.db.get("SELECT * FROM users WHERE email = ?", [email]);
+    return result;
+  }
+  
 }

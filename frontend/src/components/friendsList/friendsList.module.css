@@ -1,0 +1,10 @@
+.addUserWrapper{
+    display:flex;
+    padding: 5px;
+    padding-bottom: 25px;
+
+}
+
+.button{
+    margin-left: 25px;
+}
