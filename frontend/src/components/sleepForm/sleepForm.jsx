@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Container, Modal, Col, Row } from "react-bootstrap";
 import { useSleepItemContext } from "../../hooks/useSleepItemContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const SleepForm = () => {
   const { dispatch } = useSleepItemContext();
@@ -9,6 +10,7 @@ const SleepForm = () => {
   const [date, setDate] = useState();
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
+  const { user } = useAuthContext();
   // add state changes for form
 
   const handleClose = () => {
@@ -51,10 +53,9 @@ const SleepForm = () => {
     let desp =
       progress >= 80 ? "You did well" : progress >= 60 ? "You could do better" : progress >= 40 ? "Could sleep more" : "See a doctor";
 
-    const testEmail = "neil@email.com";
 
     // set as sleep data for post request
-    const sleepData = { email: testEmail, desp, date: dateTimeObject, hours_slept: hourSlept, variant, progress };
+    const sleepData = { email: user.email, desp, date: dateTimeObject, hours_slept: hourSlept, variant, progress };
     console.log(sleepData);
 
     const responce = await fetch("/sleepItem", {

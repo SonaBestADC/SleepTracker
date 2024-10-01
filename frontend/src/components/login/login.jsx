@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { Form, Button, Container, Modal, Col, Row } from "react-bootstrap";
+import { useLogin } from "../../hooks/useLogin";
 
 const Login = ({ show, setShow }) => {
-  // Add state compatability when login hook is created
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, isLoading, error } = useLogin();
 
   // const [show, setShow] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // set up rest of login logic
+    const result = await login(email, password);
+    console.log(result);
     setShow(false);
   };
 
@@ -24,18 +30,19 @@ const Login = ({ show, setShow }) => {
               <Col>
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" placeholder="Email Address" />
+                  <Form.Control type="email" placeholder="Email Address" onChange={(e) => setEmail(e.target.value)} value={email} />
                 </Form.Group>
               </Col>
             </Row>
             <Form.Group className="mb-3" controlId="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={isLoading}>
               Submit
             </Button>
           </Form>
+          {error && <div className="error">{error}</div>}
         </Modal.Body>
       </Modal>
     </>

@@ -20,9 +20,9 @@ app.get("/", (req, res) => {
 // !User auth routes
 // Login route
 app.post("/login", async (req, res) => {
-  const { email, username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    if (!email || !username || !password) throw Error("All fields must be filled");
+    if (!email || !password) throw Error("All fields must be filled");
     // Checks email
     const existingUser = await database.db.get("SELECT * FROM users WHERE email = ?", [email]);
     if (!existingUser) throw Error("Incorrect email");
@@ -32,7 +32,8 @@ app.post("/login", async (req, res) => {
 
     // Creates JWT token
     const token = createToken(email);
-    res.status(200).json({ email: email, token });
+    const result = await database.getUser(email);
+    res.status(200).json({ email: email, username: result.username, token });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -59,7 +60,7 @@ app.post("/signup", async (req, res) => {
     await database.addUser([email, username, hash]);
     // creates JWT token
     const token = createToken(email);
-    res.status(200).json({ email: email, token });
+    res.status(200).json({ email: email, username, token });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

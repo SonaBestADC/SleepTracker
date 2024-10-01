@@ -2,14 +2,16 @@ import { useEffect } from "react";
 import SleepItem from "../../components/sleepItem/sleepItem";
 import SleepForm from "../../components/sleepForm/sleepForm";
 import { useSleepItemContext } from "../../hooks/useSleepItemContext"; 
+import { useAuthContext } from "../../hooks/useAuthContext";
 import styles from "./home.module.css";
 
 const Home = () => {
   const { sleepItems, dispatch } = useSleepItemContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchSleepItems = async () => {
-      const responce = await fetch("/sleepItems");
+      const responce = await fetch(`/sleepItems/${user.email}`);
       const json = await responce.json();
       console.log(json)
 
@@ -19,7 +21,7 @@ const Home = () => {
     };
 
     fetchSleepItems();
-  }, []);
+  }, [user]);
 
   return (
     <div className={styles.mainContainer}>

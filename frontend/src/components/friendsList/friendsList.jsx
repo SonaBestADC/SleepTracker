@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Button, Offcanvas, Form, Row, Col } from "react-bootstrap";
 import { useFriendsContext } from "../../hooks/useFriendsContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
+
 import FriendItem from "../friendItem/friendItem";
 import styles from "./friendsList.module.css";
 
@@ -9,15 +11,15 @@ const FriendsList = () => {
   const [friendEmail, setFriendEmail] = useState("");
   const [error, setError] = useState(null);
   const { friends, dispatch } = useFriendsContext();
+  const { user } = useAuthContext();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
     const fetchFriendsList = async () => {
-      const testEmail = "damien@email.com";
       try {
-        const response = await fetch(`/friends/${testEmail}`);
+        const response = await fetch(`/friends/${user.email}`);
         if (!response.ok) {
           throw new Error("Failed to fetch friends list");
         }
@@ -32,7 +34,7 @@ const FriendsList = () => {
     };
     
     fetchFriendsList();
-  }, []);
+  }, [user]);
   
   
 
@@ -55,7 +57,7 @@ const FriendsList = () => {
     const friendUsername = await getFriendUsername(friendEmail);
 
     console.log(friendUsername);
-    const friendObject = { user_email: testEmail, user_username: testUsername,  friend_email: friendEmail, friend_username: friendUsername};
+    const friendObject = { user_email: user.email, user_username: user.username,  friend_email: friendEmail, friend_username: friendUsername};
     console.log(JSON.stringify(friendObject));
 
     const responce = await fetch("/friends", {
@@ -64,7 +66,7 @@ const FriendsList = () => {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    }, [user]);
 
     const json = await responce.json();
     if (!responce.ok) {

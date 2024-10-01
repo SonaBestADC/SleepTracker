@@ -44,7 +44,7 @@ const Signup = ({ show, setShow }) => {
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={isLoading}>
               Submit
             </Button>
           </Form>
