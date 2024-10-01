@@ -96,21 +96,43 @@ export default class DatabaseHandler {
     return await this.db.all("SELECT * FROM friends");
   }
 
-  // Get friends by user
-  async getFriendByUser(user) {
-    const friends = await this.db.all("SELECT friend FROM friends WHERE user = ?", [user]);
-    if (!friends.length) throw Error("This user has no friends");
-    return friends;
+// Get friends by user email
+async getFriendByUser(email) {
+  const friends = await this.db.all(
+    "SELECT * FROM friends WHERE user_email = ?",
+    [email]
+  );
+  if (!friends.length) {
+    throw new Error("This user has no friends");
+  }
+  return friends; 
+}
+
+// Add a friend to db
+async addFriend(friendObject) {
+  const { user_email, user_username, friend_email, friend_username } = friendObject;
+
+  const existingFriendship = await this.db.get(
+    "SELECT * FROM friends WHERE user_email = ? AND friend_email = ?",
+    [user_email, friend_email]
+  );
+
+  if (existingFriendship) {
+    throw new Error("Friendship already exists");
   }
 
-  // add a friend to db
-  async addFriend(user, friend) {
-    await this.db.run("INSERT INTO friends (user, friend) VALUES (?, ?)", [user, friend]);
-    await this.db.run("INSERT INTO friends (user, friend) VALUES (?, ?)", [friend, user]);
-    const friends = await this.db.get("SELECT friend FROM friends WHERE user = ? AND friend = ?", [user, friend]);
-    // might change return to return json
-    return friends;
-  }
+  await this.db.run(
+    "INSERT INTO friends (user_email, user_username, friend_email, friend_username) VALUES (?, ?, ?, ?)",
+    [user_email, user_username, friend_email, friend_username]
+  );
+
+  const newFriend = await this.db.get(
+    "SELECT * FROM friends WHERE user_email = ? AND friend_email = ?",
+    [user_email, friend_email]
+  );
+
+  return newFriend;
+}
 
   // Tests
   async getAllUser() {

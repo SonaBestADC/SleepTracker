@@ -15,7 +15,7 @@ export const friendsReducer = (state, action) => {
     case "DELETE_FRIEND":
       return {
         friends: state.friends.filter(
-          (s) => s.friend !== action.payload.friend
+          (s) => s.id !== action.payload.id
         ),
       };
     default:

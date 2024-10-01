@@ -170,15 +170,19 @@ app.get("/friends/:user", async (req, res) => {
 
 // POST a new friend
 app.post("/friends", async (req, res) => {
-  const { user, friend } = req.body;
+  const friendObject = req.body; 
   try {
-    if (!user || !friend) throw Error("Both user and friend are required");
-    const result = await database.addFriend(user, friend);
-    res.status(200).json(result);
+      if (!friendObject.user_email || !friendObject.friend_email) {
+          throw new Error("Both user email and friend email are required");
+      }
+      const result = await database.addFriend(friendObject); 
+      res.status(200).json(result);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+      console.error(err); 
+      res.status(400).json({ message: err.message });
   }
 });
+
 
 // Test routes
 app.get("/getAllUsers", async (req, res) => {

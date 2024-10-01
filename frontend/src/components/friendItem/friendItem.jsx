@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 
-//  TODO add context to this
 
-const FreindItem = (props) => {
+const FriendItem = ({ friendEmail, friendUsername, id }) => {
   const [message, setMessage] = useState("");
-  const [friendUsername, setFriendUsername] = useState("")
-
-
 
   useEffect(() => {
     setMessage("");
     const fetchFriendSleepItem = async () => {
-      const responce = await fetch("/sleepItems/" + props.username);
+      const responce = await fetch(`/sleepItems/${friendEmail}`);
       const json = await responce.json();
       let total = 0;
       let count = 0;
@@ -30,29 +26,19 @@ const FreindItem = (props) => {
       }
     }
 
-    const fetchFriendUser = async () => {
-      const responce = await fetch("/" + props.username);
-      const json = await responce.json();
-      if(responce.ok){
-        setFriendUsername(json.username);
-      }
-    }
-
     fetchFriendSleepItem();
-    fetchFriendUser();
 
   }, []);
-
-
 
   return (
     <Container>
       <Row>
         <Col>{friendUsername}</Col>
         <Col>{message}</Col>
+        {id}
       </Row>
     </Container>
-  );
-};
+  )
+}
 
-export default FreindItem;
+export default FriendItem

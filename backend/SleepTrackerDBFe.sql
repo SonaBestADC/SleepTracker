@@ -18,8 +18,14 @@ CREATE TABLE IF NOT EXISTS `sleep_items` (
 
 
 CREATE TABLE IF NOT EXISTS `friends` (
-  "user" VARCHAR(255) NOT NULL,
-  "friend" VARCHAR(255) NOT NULL,
-  FOREIGN KEY ("user") REFERENCES "users"("email"),
-  FOREIGN KEY ("friend") REFERENCES "users"("email")
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `user_email` VARCHAR(255) NOT NULL,
+  `user_username` VARCHAR(255) NOT NULL,
+  `friend_email` VARCHAR(255) NOT NULL,
+  `friend_username` VARCHAR(255) NOT NULL,
+  FOREIGN KEY (`user_email`) REFERENCES `users`(`email`),
+  FOREIGN KEY (`friend_email`) REFERENCES `users`(`email`),
+  UNIQUE (`user_email`, `friend_email`) 
 );
+
+
