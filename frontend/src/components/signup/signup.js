@@ -20,7 +20,7 @@ const Signup = ({ show, setShow }) => {
 
   return (
     <>
-      <Modal show={show} backdrop="static" keyboard={false} centered>
+      <Modal show={show} backdrop="static" keyboard={false} centered data-bs-theme="dark" className="text-light">
         <Modal.Header closeButton>
           <Modal.Title>Sign up</Modal.Title>
         </Modal.Header>

@@ -7,4 +7,8 @@
     display: flex;
     align-items: left;
     flex-direction: column;
+    background-color: gray;
+    height: 94vh;
+    /* width: 100vw; */
+    /* position: relative; */
 }

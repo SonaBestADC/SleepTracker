@@ -32,7 +32,7 @@ const FriendItem = ({ friendEmail, friendUsername, id }) => {
 
 
   return (
-    <Container>
+    <Container data-bs-theme="dark">
       <Row>
         <Col>{friendUsername}</Col>
         <Col>{message}</Col>

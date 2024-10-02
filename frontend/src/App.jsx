@@ -9,7 +9,7 @@ import { useAuthContext } from "./hooks/useAuthContext";
 const App = () => {
   const { user } = useAuthContext();
   return (
-    <div>
+    <div >
       <Navmenu />
       {!user && <AuthPrompt/>}
       <BrowserRouter>

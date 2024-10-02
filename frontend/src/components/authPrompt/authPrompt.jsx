@@ -25,7 +25,7 @@ const AuthPrompt = () => {
 
   return (
     <>
-      <Modal show={showPromptModal} backdrop="static" keyboard={false} centered>
+      <Modal show={showPromptModal} backdrop="static" keyboard={false} centered data-bs-theme="dark" className="text-light">
         <Modal.Header>
           <Modal.Title>Welcome</Modal.Title>
         </Modal.Header>

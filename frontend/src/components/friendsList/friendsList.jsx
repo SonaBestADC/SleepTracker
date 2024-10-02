@@ -82,7 +82,7 @@ const FriendsList = () => {
     <div>
       <div onClick={handleShow}>Friends List</div>
 
-      <Offcanvas show={show} onHide={handleClose}>
+      <Offcanvas show={show} onHide={handleClose} data-bs-theme="dark">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Friends List</Offcanvas.Title>
         </Offcanvas.Header>
