@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Signup from "../signup/signup";
 import Login from "../login/login";
+import styles from "./authPrompt.module.css";
 
 const AuthPrompt = () => {
   const [showPromptModal, setShowPromptModal] = useState(true); 
@@ -25,11 +26,11 @@ const AuthPrompt = () => {
 
   return (
     <>
-      <Modal show={showPromptModal} backdrop="static" keyboard={false} centered data-bs-theme="dark" className="text-light">
-        <Modal.Header>
+      <Modal show={showPromptModal} backdrop="static" keyboard={false} centered data-bs-theme="dark" className={styles.backdrop}>
+        <Modal.Header className={styles.modal}>
           <Modal.Title>Welcome</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={styles.modal}>
           <p>Please log in or sign up to continue.</p>
           <Button variant="primary" onClick={handleLoginClick} className="me-2">
             Log In

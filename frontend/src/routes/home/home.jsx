@@ -25,9 +25,7 @@ const Home = () => {
   }, [user]);
 
   return (
-    
     <div className={styles.mainContainer}>
-      <SleepForm />
       <div className={styles.sleepItemContainer}>
         {sleepItems &&
           sleepItems.map((sleepItem) => (
@@ -40,6 +38,7 @@ const Home = () => {
               date={new Date(sleepItem.date)}
             />
           ))}
+        <SleepForm />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Container, Modal, Col, Row } from "react-bootstrap";
 import { useLogin } from "../../hooks/useLogin";
+import styles from "./login.module.css";
 
 const Login = ({ show, setShow }) => {
   const [email, setEmail] = useState("");
@@ -20,11 +21,11 @@ const Login = ({ show, setShow }) => {
 
   return (
     <>
-      <Modal show={show} backdrop="static" keyboard={false} centered data-bs-theme="dark" className="text-light">
-        <Modal.Header closeButton>
+      <Modal show={show} backdrop="static" keyboard={false} centered data-bs-theme="dark" className={styles.backdrop}>
+        <Modal.Header className={styles.modal}>
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={styles.modal}>
           <Form onSubmit={handleSubmit}>
             <Row className="g-2">
               <Col>

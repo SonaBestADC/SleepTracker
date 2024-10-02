@@ -16,6 +16,7 @@ const FriendsList = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // MOVE to handle show
   useEffect(() => {
     const fetchFriendsList = async () => {
       try {
@@ -80,9 +81,9 @@ const FriendsList = () => {
 
   return (
     <div>
-      <div onClick={handleShow}>Friends List</div>
-
-      <Offcanvas show={show} onHide={handleClose} data-bs-theme="dark">
+      <div onClick={handleShow} className={styles.gray}>Friends List</div>
+      {/*  */}
+      <Offcanvas show={show} onHide={handleClose} className={styles.friendsList} data-bs-theme="dark">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Friends List</Offcanvas.Title>
         </Offcanvas.Header>

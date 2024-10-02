@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Form, Button, Container, Modal, Col, Row } from "react-bootstrap";
 import { useSleepItemContext } from "../../hooks/useSleepItemContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import styles from "./sleepForm.module.css";
 
 const SleepForm = () => {
-  const { dispatch } = useSleepItemContext();
+  const { dispatch } = useSleepItemContext(); 
   const [show, setShow] = useState(false);
   const [error, setError] = useState(null);
   const [date, setDate] = useState();
@@ -16,7 +17,7 @@ const SleepForm = () => {
   const handleClose = () => {
     setShow(false);
     setError(null);
-  };
+  };  
   const handleShow = () => {
     setShow(true);
     setError(null);
@@ -48,14 +49,33 @@ const SleepForm = () => {
     // For progress bar, I say the goal is 8 and therefor it is.
     const progress = (hourSlept / 8) * 100;
 
-    let variant = progress >= 80 ? "success" : progress >= 60 ? "primary" : progress >= 40 ? "warning" : "danger";
+    let variant =
+      progress >= 80
+        ? "success"
+        : progress >= 60
+        ? "primary"
+        : progress >= 40
+        ? "warning"
+        : "danger";
 
     let desp =
-      progress >= 80 ? "You did well" : progress >= 60 ? "You could do better" : progress >= 40 ? "Could sleep more" : "See a doctor";
-
+      progress >= 80
+        ? "You did well"
+        : progress >= 60
+        ? "You could do better"
+        : progress >= 40
+        ? "Could sleep more"
+        : "See a doctor";
 
     // set as sleep data for post request
-    const sleepData = { email: user.email, desp, date: dateTimeObject, hours_slept: hourSlept, variant, progress };
+    const sleepData = {
+      email: user.email,
+      desp,
+      date: dateTimeObject,
+      hours_slept: hourSlept,
+      variant,
+      progress,
+    };
     console.log(sleepData);
 
     const responce = await fetch("/sleepItem", {
@@ -76,13 +96,15 @@ const SleepForm = () => {
       setEndTime("");
       setError(null);
       console.log("New sleep item added");
-      dispatch({type: "CREATE_SLEEP_ITEM", payload: json})
+      dispatch({ type: "CREATE_SLEEP_ITEM", payload: json });
       setShow(false);
     }
   };
   return (
     <div>
-      <Button onClick={handleShow}>Sleep Form</Button>
+      <button onClick={handleShow} className={styles.btn}>
+        Sleep Form
+      </button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -94,19 +116,34 @@ const SleepForm = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="date">
               <Form.Label>Date of Sleep</Form.Label>
-              <Form.Control type="date" placeholder="date" onChange={(e) => setDate(e.target.value)} value={date} />
+              <Form.Control
+                type="date"
+                placeholder="date"
+                onChange={(e) => setDate(e.target.value)}
+                value={date}
+              />
             </Form.Group>
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="start">
                   <Form.Label>Sleep Start Time</Form.Label>
-                  <Form.Control type="time" placeholder="start" onChange={(e) => setStartTime(e.target.value)} value={startTime} />
+                  <Form.Control
+                    type="time"
+                    placeholder="start"
+                    onChange={(e) => setStartTime(e.target.value)}
+                    value={startTime}
+                  />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group className="mb-3" controlId="end">
                   <Form.Label>Awake time</Form.Label>
-                  <Form.Control type="time" placeholder="end" onChange={(e) => setEndTime(e.target.value)} value={endTime} />
+                  <Form.Control
+                    type="time"
+                    placeholder="end"
+                    onChange={(e) => setEndTime(e.target.value)}
+                    value={endTime}
+                  />
                 </Form.Group>
               </Col>
             </Row>

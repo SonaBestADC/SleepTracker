@@ -8,3 +8,12 @@
 .button{
     margin-left: 25px;
 }
+
+.friendsList{
+    background-color: #2a3035;
+    color: white;
+}
+
+.gray{
+    color: #c8cace; 
+}
