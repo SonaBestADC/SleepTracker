@@ -30,12 +30,12 @@ const FriendItem = ({ friendEmail, friendUsername, id }) => {
 
   }, []);
 
+
   return (
     <Container>
       <Row>
         <Col>{friendUsername}</Col>
         <Col>{message}</Col>
-        {id}
       </Row>
     </Container>
   )

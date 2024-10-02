@@ -52,8 +52,6 @@ const FriendsList = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const testEmail = "damien@email.com";
-    const testUsername = "SonaBestADC";
     const friendUsername = await getFriendUsername(friendEmail);
 
     console.log(friendUsername);
