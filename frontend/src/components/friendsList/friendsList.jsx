@@ -14,10 +14,8 @@ const FriendsList = () => {
   const { user } = useAuthContext();
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  // MOVE to handle show
-  useEffect(() => {
+  const handleShow = () => {
+    setShow(true);
     const fetchFriendsList = async () => {
       try {
         const response = await fetch(`/friends/${user.email}`);
@@ -35,7 +33,28 @@ const FriendsList = () => {
     };
     
     fetchFriendsList();
-  }, [user]);
+  }
+
+  // MOVE to handle show
+  // useEffect(() => {
+  //   const fetchFriendsList = async () => {
+  //     try {
+  //       const response = await fetch(`/friends/${user.email}`);
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch friends list");
+  //       }
+  //       const json = await response.json();
+  //       console.log("Fetched friends list:", json);
+  //       console.log("Fetched friends context:", friends);
+  //       dispatch({ type: "SET_FRIEND", payload: json });
+        
+  //     } catch (error) {
+  //       console.error("Error fetching friends list:", error);
+  //     }
+  //   };
+    
+  //   fetchFriendsList();
+  // }, [user]);
   
   
 

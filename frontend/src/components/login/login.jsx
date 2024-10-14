@@ -16,7 +16,9 @@ const Login = ({ show, setShow }) => {
     // set up rest of login logic
     const result = await login(email, password);
     console.log(result);
-    setShow(false);
+    if (result && !error) {
+      setShow(false);
+    }
   };
 
   return (

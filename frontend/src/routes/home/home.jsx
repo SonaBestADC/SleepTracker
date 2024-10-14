@@ -14,7 +14,6 @@ const Home = () => {
     const fetchSleepItems = async () => {
       const responce = await fetch(`/sleepItems/${user.email}`);
       const json = await responce.json();
-      console.log(json);
 
       if (responce.ok) {
         dispatch({ type: "SET_SLEEP_ITEM", payload: json });

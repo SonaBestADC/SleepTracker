@@ -17,11 +17,10 @@ export const useLogin = () => {
     });
 
     const json = await responce.json();
-    console.log(json);
 
     if (!responce.ok) {
       setIsLoading(false);
-      setError(json.error);
+      setError(json.message);
     }
 
     if (responce.ok) {
