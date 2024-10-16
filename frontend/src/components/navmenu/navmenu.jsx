@@ -1,17 +1,17 @@
 import React from "react";
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import FriendsList from "../friendsList/friendsList";
 import { useLogout } from "../../hooks/useLogout";
-
-import Signup from "../signup/signup";
-// import SleepForm from "../sleepForm/sleepForm";
+import { useFriendsContext } from "../../hooks/useFriendsContext";
 import styles from "./navmenu.module.css";
 
 const Navmenu = () => {
   const { logout } = useLogout();
+  const { dispatch } = useFriendsContext();
 
   const handleClick = () => {
     logout();
+    dispatch({ type: "SET_FRIEND", payload: null });
   };
 
   return (

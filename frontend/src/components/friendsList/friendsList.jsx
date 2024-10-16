@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Button, Offcanvas, Form, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Offcanvas, Form } from "react-bootstrap";
 import { useFriendsContext } from "../../hooks/useFriendsContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
@@ -23,40 +23,17 @@ const FriendsList = () => {
           throw new Error("Failed to fetch friends list");
         }
         const json = await response.json();
-        console.log("Fetched friends list:", json);
-        console.log("Fetched friends context:", friends);
         dispatch({ type: "SET_FRIEND", payload: json });
+        setError(null);
         
-      } catch (error) {
-        console.error("Error fetching friends list:", error);
+      } catch (err) {
+        console.error("Error fetching friends list:", err);
+        setError("No friends listed");
       }
     };
     
     fetchFriendsList();
   }
-
-  // MOVE to handle show
-  // useEffect(() => {
-  //   const fetchFriendsList = async () => {
-  //     try {
-  //       const response = await fetch(`/friends/${user.email}`);
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch friends list");
-  //       }
-  //       const json = await response.json();
-  //       console.log("Fetched friends list:", json);
-  //       console.log("Fetched friends context:", friends);
-  //       dispatch({ type: "SET_FRIEND", payload: json });
-        
-  //     } catch (error) {
-  //       console.error("Error fetching friends list:", error);
-  //     }
-  //   };
-    
-  //   fetchFriendsList();
-  // }, [user]);
-  
-  
 
   const getFriendUsername = async (friendEmail) => {
     const response = await fetch("/" + friendEmail);
@@ -101,7 +78,6 @@ const FriendsList = () => {
   return (
     <div>
       <div onClick={handleShow} className={styles.gray}>Friends List</div>
-      {/*  */}
       <Offcanvas show={show} onHide={handleClose} className={styles.friendsList} data-bs-theme="dark">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Friends List</Offcanvas.Title>
@@ -126,6 +102,7 @@ const FriendsList = () => {
             friends.map((friend) => (
               <FriendItem key={friend.id} friendEmail={friend.friend_email} friendUsername={friend.friend_username} id={friend.id}/>
             ))}
+            {error && <div className="error">{error}</  div>}
         </Offcanvas.Body>
       </Offcanvas>
     </div>

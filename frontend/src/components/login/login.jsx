@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Form, Button, Container, Modal, Col, Row } from "react-bootstrap";
+import { Form, Button, Modal, Col, Row } from "react-bootstrap";
 import { useLogin } from "../../hooks/useLogin";
 import styles from "./login.module.css";
 
 const Login = ({ show, setShow }) => {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login, isLoading, error } = useLogin();
 

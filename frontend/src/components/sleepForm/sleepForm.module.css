@@ -6,3 +6,12 @@
     border: 0;
     font-size: 1.2rem;
 }
+
+.modal{
+    background-color: #2a3035;
+    color: white;
+}
+
+.backdrop{
+    background-color: #1a1a1c;
+}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, Container, Modal, Col, Row } from "react-bootstrap";
+import { Form, Button, Modal, Col, Row } from "react-bootstrap";
 import { useSleepItemContext } from "../../hooks/useSleepItemContext";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import styles from "./sleepForm.module.css";
@@ -106,13 +106,11 @@ const SleepForm = () => {
         Sleep Form
       </button>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+      <Modal show={show} onHide={handleClose} centered data-bs-theme="dark">
+        <Modal.Header closeButton className={styles.modal}>
           <Modal.Title>Sleep Form</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {/* Add onChange={(e)=. setState(e.target.value)} for each form part */}
-          {/* Also add value={value} to each Form.Control/look up react bootstrap stuff */}
+        <Modal.Body className={styles.modal}>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="date">
               <Form.Label>Date of Sleep</Form.Label>
