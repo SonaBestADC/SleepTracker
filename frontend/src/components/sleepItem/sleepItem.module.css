@@ -1,15 +1,10 @@
 .card{
-    margin: 2%;
+    margin: 15px;
     width: 75%;
     padding-bottom: 15px;
     background-color: #2a3035;
     color: white;
 }
-/* Potential Colors:
-A0A0A0
-E6E6FA
-333333  
-*/
 .title{
     display: flex;
     justify-content: space-between;
@@ -18,4 +13,11 @@ E6E6FA
 .white{
     color: rgb(188, 188, 188);
 }
-    
+
+@media (max-width:700px){
+    .card{
+        margin: 2%;
+        width: 95%;
+        padding-bottom: 15px;
+    }
+}

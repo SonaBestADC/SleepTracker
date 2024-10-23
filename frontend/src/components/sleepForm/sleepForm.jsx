@@ -145,10 +145,10 @@ const SleepForm = () => {
                 </Form.Group>
               </Col>
             </Row>
-            {error && <div className="error">{error}</div>}
             <Button variant="primary" type="submit">
               Submit
             </Button>
+            {error && <div className={styles.error}>{error}</div>}
           </Form>
         </Modal.Body>
       </Modal>

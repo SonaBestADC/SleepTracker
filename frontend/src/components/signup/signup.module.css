@@ -6,3 +6,8 @@
 .backdrop{
     background-color: #1a1a1c;
 }
+.error{
+    color: red;
+    padding: 10px;
+    font-weight: bold;
+}

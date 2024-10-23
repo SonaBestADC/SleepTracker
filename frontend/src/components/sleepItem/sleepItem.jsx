@@ -20,7 +20,6 @@ const SleepItem = (props) => {
   };
 
   return (
-    // data-bs-theme="dark"
     <Card className={styles.card} >
       <Card.Body>
         <Card.Title>

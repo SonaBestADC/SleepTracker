@@ -44,7 +44,7 @@ const Login = ({ show, setShow }) => {
               Submit
             </Button>
           </Form>
-          {error && <div className="error">{error}</div>}
+          {error && <div className={styles.error}>{error}</div>}
         </Modal.Body>
       </Modal>
     </>
