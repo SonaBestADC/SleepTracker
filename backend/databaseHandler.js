@@ -139,7 +139,6 @@ async addFriend(friendObject) {
     return await this.db.all("SELECT * FROM users");
   }
 
-  // get user by email
   async getUser(email){
     const result = this.db.get("SELECT * FROM users WHERE email = ?", [email]);
     return result;
