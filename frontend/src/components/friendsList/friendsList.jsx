@@ -49,7 +49,9 @@ const FriendsList = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const friendUsername = await getFriendUsername(friendEmail);
+    try{
+
+      const friendUsername = await getFriendUsername(friendEmail);
 
     console.log(friendUsername);
     const friendObject = { user_email: user.email, user_username: user.username,  friend_email: friendEmail, friend_username: friendUsername};
@@ -66,12 +68,16 @@ const FriendsList = () => {
     const json = await responce.json();
     if (!responce.ok) {
       setError(json.message);
+      return;
     }
 
     if (responce.ok) {
       setFriendEmail("");
       setError(null);
       dispatch({ type: "ADD_FRIEND", payload: json });
+    }
+    }catch (err){
+      setError("An error has occured");
     }
   };
 

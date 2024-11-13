@@ -6,7 +6,7 @@ export const friendsReducer = (state, action) => {
   switch (action.type) {
     case "SET_FRIEND":
       return {
-        friends: action.payload,
+        friends: Array.isArray(action.payload) ? action.payload : [],
       };
     case "ADD_FRIEND":
       return {
@@ -14,9 +14,7 @@ export const friendsReducer = (state, action) => {
       };
     case "DELETE_FRIEND":
       return {
-        friends: state.friends.filter(
-          (s) => s.id !== action.payload.id
-        ),
+        friends: state.friends.filter((friend) => friend.id !== action.payload.id),
       };
     default:
       return state;
