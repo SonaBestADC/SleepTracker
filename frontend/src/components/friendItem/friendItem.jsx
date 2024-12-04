@@ -17,13 +17,20 @@ const FriendItem = ({ friendEmail, friendUsername, id }) => {
         count++;
       });
       let avg = total/count;
-      if(avg >= 66.6){
-        setMessage(":)");
-      }else if(avg >= 33.3){
-        setMessage(":/");
-      }else{
-        setMessage(":(");
+      if (avg >= 85) {
+        setMessage("🌟 Excellent sleep!");
+      } else if (avg >= 70) {
+        setMessage("😊 Good rest!");
+      } else if (avg >= 55) {
+        setMessage("🙂 Decent, but could improve.");
+      } else if (avg >= 40) {
+        setMessage("😐 Needs better sleep.");
+      } else if (avg >= 25) {
+        setMessage("😟 Poor sleep—focus on rest.");
+      } else {
+        setMessage("😞 Very poor sleep. Take action.");
       }
+      
     }
 
     fetchFriendSleepItem();
@@ -32,12 +39,13 @@ const FriendItem = ({ friendEmail, friendUsername, id }) => {
 
 
   return (
-    <Container data-bs-theme="dark">
-      <Row>
-        <Col>{friendUsername}</Col>
-        <Col>{message}</Col>
-      </Row>
-    </Container>
+<Container data-bs-theme="dark">
+  <Row>
+    <Col md={3}>{friendUsername}</Col>
+    <Col md={9}>{message}</Col>
+  </Row>
+</Container>
+
   )
 }
 

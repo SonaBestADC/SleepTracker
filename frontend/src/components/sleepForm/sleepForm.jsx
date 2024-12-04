@@ -58,14 +58,19 @@ const SleepForm = () => {
         ? "warning"
         : "danger";
 
-    let desp =
-      progress >= 80
-        ? "You did well"
-        : progress >= 60
-        ? "You could do better"
-        : progress >= 40
-        ? "Could sleep more"
-        : "See a doctor";
+        let desp =
+        progress >= 90
+          ? "Fantastic! Your sleep quality has been outstanding."
+          : progress >= 75
+          ? "Well done! You've had good sleep, just a few areas to fine-tune."
+          : progress >= 60
+          ? "Decent effort, but a more consistent sleep routine could help."
+          : progress >= 45
+          ? "Your sleep needs improvement. Try focusing on better sleep habits."
+          : progress >= 30
+          ? "You're not getting enough rest. Prioritize a healthier sleep schedule."
+          : "Your sleep patterns are concerning. Please seek professional advice.";
+      
 
     // set as sleep data for post request
     const sleepData = {
