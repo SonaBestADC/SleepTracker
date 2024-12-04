@@ -34,24 +34,17 @@ const FriendsList = () => {
     
     fetchFriendsList();
   }
-
-  const getFriendUsername = async (friendEmail) => {
-    const response = await fetch("/" + friendEmail);
-    const json = await response.json();
-
-    if (!response.ok) {
-      return null; 
-    }
-    if (response.ok) {
-      return json.username;
-    }
-  };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
 
       const friendUsername = await getFriendUsername(friendEmail);
+      if (!friendUsername) {
+        setError("User not found");
+        return; // Exit the function if username is null
+      }
+
 
     console.log(friendUsername);
     const friendObject = { user_email: user.email, user_username: user.username,  friend_email: friendEmail, friend_username: friendUsername};
@@ -78,6 +71,18 @@ const FriendsList = () => {
     }
     }catch (err){
       setError("An error has occured");
+    }
+  };
+
+  const getFriendUsername = async (friendEmail) => {
+    try {
+      const response = await fetch(`/${friendEmail}`); // Ensure this endpoint exists and returns { username }
+      if (!response.ok) throw new Error("User not found");
+      const json = await response.json();
+      return json.username;  // Ensure the response has `username` property
+    } catch (error) {
+      console.error("Error fetching friend username:", error);
+      return null;
     }
   };
 

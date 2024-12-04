@@ -185,6 +185,22 @@ app.post("/friends", async (req, res) => {
 });
 
 
+app.get("/getAllUsers", async (req, res) => {
+  const users = await database.getAllUser()
+  res.status(200).json(users);
+});
+
+app.get("/:email", async (req, res) => {
+  const { email } = req.params;
+  try{
+    const result = await database.getUser(email);
+    res.status(200).json(result);
+  }catch(err){
+    res.status(400).json({message: err.message});
+  }
+
+});
+
 
 
 app.listen(process.env.PORT, () => {
